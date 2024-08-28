@@ -6,6 +6,7 @@ import br.com.ferrickharm.agenda.dtos.consulta.DadosAtualizarConsultaDTO;
 import br.com.ferrickharm.agenda.dtos.consulta.DadosDetalhamentoConsultaDTO;
 import br.com.ferrickharm.agenda.infra.exceptions.ValidacaoException;
 import br.com.ferrickharm.agenda.models.Consulta;
+import br.com.ferrickharm.agenda.producers.ConsultaProducer;
 import br.com.ferrickharm.agenda.repositories.ConsultaRepository;
 import br.com.ferrickharm.agenda.repositories.PacienteRepository;
 import br.com.ferrickharm.agenda.repositories.ProfissionalDeSaudeRepository;
@@ -33,6 +34,9 @@ public class ConsultaService {
     @Autowired
     private List<Validador> validadores;
 
+    @Autowired
+    private ConsultaProducer consultaProducer;
+
     @Transactional
     public DadosDetalhamentoConsultaDTO agendar(DadosAgendamentoConsultaDTO dados){
         if(!pacienteRepository.existsById(dados.idPaciente())){
@@ -48,6 +52,8 @@ public class ConsultaService {
         var profissionalDeSaude = profissionalDeSaudeRepository.getReferenceById(dados.idProfissionalDeSaude());
         var consulta = new Consulta(null, profissionalDeSaude, paciente, dados.data(), dados.descricao());
         consultaRepository.save(consulta);
+
+        consultaProducer.publishMessageEmail(consulta);
 
         return new DadosDetalhamentoConsultaDTO(consulta);
     }
