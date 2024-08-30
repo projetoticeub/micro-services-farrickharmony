@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -56,6 +57,18 @@ public class PacienteController {
         var paciente = service.listarAtivos(paginacao).map(DadosListagemPacienteDTO::new);
         return ResponseEntity.ok(paciente);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<DadosListagemPacienteDTO>> listarPorParametros (
+            @RequestParam(required = false) String nomeCompleto,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) LocalDate dataNascimento,
+            @RequestParam(required = false) String telefone,
+            Pageable pageable) {
+        Page<DadosListagemPacienteDTO> pacientes = service.listarPorParametros(nomeCompleto, cpf, dataNascimento, telefone, pageable);
+        return ResponseEntity.ok().body(pacientes);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@RequestBody DadosAtualizarPacienteDTO dados, @PathVariable Long id) {

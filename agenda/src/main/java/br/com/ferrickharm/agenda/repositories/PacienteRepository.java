@@ -1,8 +1,10 @@
 package br.com.ferrickharm.agenda.repositories;
 
+import br.com.ferrickharm.agenda.dtos.paciente.DadosListagemPacienteDTO;
 import br.com.ferrickharm.agenda.models.Paciente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +18,5 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     Page<Paciente> findAllByAtivoTrue(Pageable pageable);
 
+    Page<DadosListagemPacienteDTO> findAll(Specification<Paciente> spec, Pageable pageable);
 }

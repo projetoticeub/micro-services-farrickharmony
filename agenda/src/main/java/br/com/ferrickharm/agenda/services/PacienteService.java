@@ -2,14 +2,18 @@ package br.com.ferrickharm.agenda.services;
 
 import br.com.ferrickharm.agenda.dtos.paciente.DadosAtualizarPacienteDTO;
 import br.com.ferrickharm.agenda.dtos.paciente.DadosCadastroPacienteDTO;
+import br.com.ferrickharm.agenda.dtos.paciente.DadosListagemPacienteDTO;
 import br.com.ferrickharm.agenda.models.Paciente;
 import br.com.ferrickharm.agenda.repositories.PacienteRepository;
+import br.com.ferrickharm.agenda.specifications.PacienteSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -65,6 +69,12 @@ public class PacienteService {
         var paciente = pacienteOpt.get();
         paciente.deletar();
         return paciente;
+    }
+
+    public Page<DadosListagemPacienteDTO> listarPorParametros(String nomeCompleto, String cpf, LocalDate dataNascimento,
+                                                              String telefone, Pageable pageable) {
+        Specification<Paciente> spec = PacienteSpecification.parametros(nomeCompleto, cpf, dataNascimento, telefone);
+        return repository.findAll(spec, pageable);
     }
 
 }
