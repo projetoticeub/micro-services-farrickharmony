@@ -1,6 +1,5 @@
 package br.com.ferrickharm.agenda.specifications;
 
-import br.com.ferrickharm.agenda.models.Consulta;
 import br.com.ferrickharm.agenda.models.Paciente;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -22,11 +21,11 @@ public class PacienteSpecification {
             }
 
             if (cpf != null) {
-                p = builder.and(p, builder.equal(root.get("cpf"), "%" + cpf + "%"));
+                p = builder.and(p, builder.equal(root.get("cpf"), cpf));
             }
 
             if (dataNascimento != null) {
-                p = builder.and(p, builder.equal(root.get("dataNascimento"), "%" + dataNascimento + "%"));
+                p = builder.and(p, builder.equal(root.get("dataNascimento"), dataNascimento));
             }
 
             if (telefone != null) {

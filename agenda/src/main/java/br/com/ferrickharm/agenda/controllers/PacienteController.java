@@ -58,7 +58,7 @@ public class PacienteController {
         return ResponseEntity.ok(paciente);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/testes")
     public ResponseEntity<Page<DadosListagemPacienteDTO>> listarPorParametros (
             @RequestParam(required = false) String nomeCompleto,
             @RequestParam(required = false) String cpf,
