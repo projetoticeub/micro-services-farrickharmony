@@ -2,14 +2,19 @@ package br.com.ferrickharm.agenda.services;
 
 import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosAtualizarProfissionalDeSaudeDTO;
 import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosCadastroProfissionalDeSaudeDTO;
+import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosListagemProfissionalDeSaudeDTO;
 import br.com.ferrickharm.agenda.models.ProfissionalDeSaude;
 import br.com.ferrickharm.agenda.repositories.ProfissionalDeSaudeRepository;
+import br.com.ferrickharm.agenda.specifications.PacienteSpecification;
+import br.com.ferrickharm.agenda.specifications.ProfissionalDeSaudeSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -73,4 +78,12 @@ public class ProfissionalDeSaudeService {
         profissionalDeSaude.deletar();
         return profissionalDeSaude;
     }
+
+    public Page<DadosListagemProfissionalDeSaudeDTO> listarPorParametros(String nomeCompleto, String cpf, LocalDate dataNascimento,
+                                                                         String telefone, String registro, Pageable pageable) {
+        Specification<ProfissionalDeSaude> spec = ProfissionalDeSaudeSpecification
+                .parametros(nomeCompleto, cpf, dataNascimento, telefone, registro);
+        return repository.findAll(spec, pageable);
+    }
+
 }

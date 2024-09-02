@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/profissionais-de-saude")
 @SecurityRequirement(name = "bearer-key")
@@ -51,6 +53,19 @@ public class ProfissionalDeSaudeController {
                                                                                       Pageable paginacao) {
         var profissional = service.listarAtivos(paginacao).map(DadosListagemProfissionalDeSaudeDTO::new);
         return ResponseEntity.ok(profissional);
+    }
+
+    @GetMapping("/param")
+    public ResponseEntity<Page<DadosListagemProfissionalDeSaudeDTO>> listar(
+            @RequestParam(required = false) String nomeCompleto,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) LocalDate dataNascimento,
+            @RequestParam(required = false) String telefone,
+            @RequestParam(required = false) String registro,
+            @PageableDefault(size = 10, sort = {"nomeCompleto"})
+            Pageable paginacao) {
+        var profissional = service.listarPorParametros(nomeCompleto, cpf, dataNascimento, telefone, registro, paginacao);
+        return ResponseEntity.ok().body(profissional);
     }
 
     @PutMapping("/{id}")
