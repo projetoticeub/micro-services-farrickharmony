@@ -4,18 +4,24 @@ import br.com.ferrickharm.agenda.domain.validacao.Validador;
 import br.com.ferrickharm.agenda.dtos.consulta.DadosAgendamentoConsultaDTO;
 import br.com.ferrickharm.agenda.dtos.consulta.DadosAtualizarConsultaDTO;
 import br.com.ferrickharm.agenda.dtos.consulta.DadosDetalhamentoConsultaDTO;
+import br.com.ferrickharm.agenda.dtos.consulta.DadosListagemConsultaDTO;
 import br.com.ferrickharm.agenda.infra.exceptions.ValidacaoException;
 import br.com.ferrickharm.agenda.models.Consulta;
+import br.com.ferrickharm.agenda.models.Paciente;
+import br.com.ferrickharm.agenda.models.ProfissionalDeSaude;
 import br.com.ferrickharm.agenda.producers.ConsultaProducer;
 import br.com.ferrickharm.agenda.repositories.ConsultaRepository;
 import br.com.ferrickharm.agenda.repositories.PacienteRepository;
 import br.com.ferrickharm.agenda.repositories.ProfissionalDeSaudeRepository;
+import br.com.ferrickharm.agenda.specifications.ConsultaSpecification;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +90,21 @@ public class ConsultaService {
             throw new ValidacaoException("Id não encontrado! ");
         }
         consultaRepository.deleteById(id);
+    }
+
+    public Page<DadosListagemConsultaDTO> listarPorParametros(Long profissionalDeSaudeId, Long pacienteId, LocalDateTime data, Pageable pageable) {
+        ProfissionalDeSaude profissionalDeSaude = null;
+        Paciente paciente = null;
+        if (profissionalDeSaudeId != null) {
+            profissionalDeSaude = profissionalDeSaudeRepository.findById(profissionalDeSaudeId)
+                    .orElseThrow(() -> new ValidacaoException("Profissional de saúde não encontrado"));
+        }
+        if (pacienteId != null) {
+            paciente = pacienteRepository.findById(pacienteId)
+                    .orElseThrow(() -> new ValidacaoException("Paciente não encontrado"));
+        }
+        Specification<Consulta> spec = ConsultaSpecification.parametros(profissionalDeSaude, paciente, data);
+        return consultaRepository.findAll(spec, pageable);
     }
 
 }

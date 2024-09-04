@@ -15,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/consultas")
 @Tag(name = "Consulta")
@@ -45,6 +47,18 @@ public class ConsultaController {
         var consulta = service.listarPorId(id);
         return ResponseEntity.ok().body(consulta);
     }
+
+    @GetMapping("/param")
+    public ResponseEntity<Page<DadosListagemConsultaDTO>> listarPorParametros(
+            @RequestParam(required = false) Long profissionalDeSaudeId,
+            @RequestParam(required = false) Long pacienteId,
+            @RequestParam(required = false) LocalDateTime data,
+            @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+
+        var consultas = service.listarPorParametros(profissionalDeSaudeId, pacienteId, data, paginacao);
+        return ResponseEntity.ok(consultas);
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@RequestBody DadosAtualizarConsultaDTO dados, @PathVariable Long id) {
