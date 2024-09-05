@@ -92,16 +92,20 @@ public class ConsultaService {
         consultaRepository.deleteById(id);
     }
 
-    public Page<DadosListagemConsultaDTO> listarPorParametros(Long profissionalDeSaudeId, Long pacienteId, LocalDateTime data, Pageable pageable) {
+    public Page<DadosListagemConsultaDTO> listarPorParametros(String profissionalDeSaudeNome , String pacienteNome,
+                                                              String profissionalDeSaudeCpf, String pacienteCpf,
+                                                              LocalDateTime data, Pageable pageable) {
         ProfissionalDeSaude profissionalDeSaude = null;
         Paciente paciente = null;
-        if (profissionalDeSaudeId != null) {
-            profissionalDeSaude = profissionalDeSaudeRepository.findById(profissionalDeSaudeId)
-                    .orElseThrow(() -> new ValidacaoException("Profissional de saúde não encontrado"));
+        if (profissionalDeSaudeNome != null || profissionalDeSaudeCpf != null) {
+            profissionalDeSaude = new ProfissionalDeSaude();
+            profissionalDeSaude.setNomeCompleto(profissionalDeSaudeNome);
+            profissionalDeSaude.setCpf(profissionalDeSaudeCpf);
         }
-        if (pacienteId != null) {
-            paciente = pacienteRepository.findById(pacienteId)
-                    .orElseThrow(() -> new ValidacaoException("Paciente não encontrado"));
+        if (pacienteNome != null || pacienteCpf != null) {
+            paciente = new Paciente();
+            paciente.setNomeCompleto(pacienteNome);
+            paciente.setCpf(pacienteCpf);
         }
         Specification<Consulta> spec = ConsultaSpecification.parametros(profissionalDeSaude, paciente, data);
         return consultaRepository.findAll(spec, pageable);

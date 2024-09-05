@@ -50,12 +50,15 @@ public class ConsultaController {
 
     @GetMapping("/param")
     public ResponseEntity<Page<DadosListagemConsultaDTO>> listarPorParametros(
-            @RequestParam(required = false) Long profissionalDeSaudeId,
-            @RequestParam(required = false) Long pacienteId,
+            @RequestParam(required = false) String profissionalDeSaudeNome,
+            @RequestParam(required = false) String pacienteNome,
+            @RequestParam(required = false) String profissionalDeSaudeCpf,
+            @RequestParam(required = false) String pacienteCpf,
             @RequestParam(required = false) LocalDateTime data,
             @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
 
-        var consultas = service.listarPorParametros(profissionalDeSaudeId, pacienteId, data, paginacao);
+        var consultas = service.listarPorParametros(profissionalDeSaudeNome, pacienteNome,
+                profissionalDeSaudeCpf, pacienteCpf, data, paginacao);
         return ResponseEntity.ok(consultas);
     }
 

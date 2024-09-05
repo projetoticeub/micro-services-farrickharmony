@@ -17,12 +17,22 @@ public class ConsultaSpecification {
         return (Root<Consulta> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             Predicate p = builder.conjunction();
 
-            if (profissionalDeSaude != null && profissionalDeSaude.getId() != null) {
-                p = builder.and(p, builder.equal(root.get("profissionalDeSaude").get("id"), profissionalDeSaude.getId()));
+            if (profissionalDeSaude != null && profissionalDeSaude.getNomeCompleto() != null) {
+                p = builder.and(p, builder.like(root.get("profissionalDeSaude").get("nomeCompleto"),
+                        "%" + profissionalDeSaude.getNomeCompleto() + "%"));
+            }
+
+            if (profissionalDeSaude != null && profissionalDeSaude.getCpf() != null) {
+                p = builder.and(p, builder.equal(root.get("profissionalDeSaude").get("cpf"),profissionalDeSaude.getCpf()));
             }
 
             if (paciente != null && paciente.getId() != null) {
-                p = builder.and(p, builder.equal(root.get("paciente").get("id"), paciente.getId()));
+                p = builder.and(p, builder.like(root.get("paciente").get("nomeCompleto"),
+                        "%" + paciente.getNomeCompleto() + "%"));
+            }
+
+            if (paciente != null && paciente.getCpf() != null) {
+                p = builder.and(p, builder.equal(root.get("paciente").get("cpf"),paciente.getCpf()));
             }
 
             if (data != null) {
