@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -109,6 +110,10 @@ public class ConsultaService {
         }
         Specification<Consulta> spec = ConsultaSpecification.parametros(profissionalDeSaude, paciente, data);
         return consultaRepository.findAll(spec, pageable);
+    }
+
+    public Page<DadosListagemConsultaDTO> listarPorData(LocalDate data, Pageable pageable) {
+        return consultaRepository.findByData(data, pageable).map(DadosListagemConsultaDTO::new);
     }
 
 }

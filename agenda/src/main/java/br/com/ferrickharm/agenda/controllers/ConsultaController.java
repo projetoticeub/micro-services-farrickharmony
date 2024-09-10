@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -61,6 +63,16 @@ public class ConsultaController {
                 profissionalDeSaudeCpf, pacienteCpf, data, paginacao);
         return ResponseEntity.ok(consultas);
     }
+
+    @GetMapping("/data/{data}")
+    public ResponseEntity<Page<DadosListagemConsultaDTO>> listarPorData(
+            @PathVariable("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+            @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
+
+        var consultas = service.listarPorData(data, pageable);
+        return ResponseEntity.ok(consultas);
+    }
+
 
 
     @PutMapping("/{id}")
