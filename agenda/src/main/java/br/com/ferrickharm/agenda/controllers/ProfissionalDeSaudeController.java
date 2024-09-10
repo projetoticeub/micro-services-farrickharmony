@@ -35,12 +35,12 @@ public class ProfissionalDeSaudeController {
         return ResponseEntity.created(uri).body(new DadosDetalhamentoProfissionalDeSaudeDTO(profissional));
     }
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemProfissionalDeSaudeDTO>> listar(@PageableDefault(size = 10, sort = {"nomeCompleto"})
-    Pageable paginacao) {
-        var profissional = service.listarTodos(paginacao).map(DadosListagemProfissionalDeSaudeDTO::new);
-        return ResponseEntity.ok(profissional);
-    }
+//    @GetMapping
+//    public ResponseEntity<Page<DadosListagemProfissionalDeSaudeDTO>> listar(@PageableDefault(size = 10, sort = {"nomeCompleto"})
+//    Pageable paginacao) {
+//        var profissional = service.listarTodos(paginacao).map(DadosListagemProfissionalDeSaudeDTO::new);
+//        return ResponseEntity.ok(profissional);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id) {
@@ -55,7 +55,7 @@ public class ProfissionalDeSaudeController {
         return ResponseEntity.ok(profissional);
     }
 
-    @GetMapping("/param")
+    @GetMapping()
     public ResponseEntity<Page<DadosListagemProfissionalDeSaudeDTO>> listar(
             @RequestParam(required = false) String nomeCompleto,
             @RequestParam(required = false) String cpf,

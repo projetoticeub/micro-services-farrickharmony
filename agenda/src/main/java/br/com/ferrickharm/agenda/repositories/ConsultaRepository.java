@@ -18,7 +18,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     Boolean existsByPacienteIdAndDataBetween(Long id, LocalDateTime startDate, LocalDateTime endDate);
 
-    Page<DadosListagemConsultaDTO> findAll(Specification<Consulta> spec, Pageable pageable);
+    Page<Consulta> findAll(Specification<Consulta> spec, Pageable pageable);
 
     @Query("""
     SELECT c

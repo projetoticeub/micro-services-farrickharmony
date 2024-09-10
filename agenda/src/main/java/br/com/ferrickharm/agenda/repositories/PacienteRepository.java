@@ -18,7 +18,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     Page<Paciente> findAllByAtivoTrue(Pageable pageable);
 
-    Page<DadosListagemPacienteDTO> findAll(Specification<Paciente> spec, Pageable pageable);
+    Page<Paciente> findAll(Specification<Paciente> spec, Pageable pageable);
 
     @Query("SELECT p FROM Paciente p WHERE p.nomeCompleto LIKE %:pacienteNome%")
     Optional<Paciente> findByName(@Param("pacienteNome") String pacienteNome);

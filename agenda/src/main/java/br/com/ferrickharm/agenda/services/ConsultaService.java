@@ -109,7 +109,7 @@ public class ConsultaService {
             paciente.setCpf(pacienteCpf);
         }
         Specification<Consulta> spec = ConsultaSpecification.parametros(profissionalDeSaude, paciente, data);
-        return consultaRepository.findAll(spec, pageable);
+        return consultaRepository.findAll(spec, pageable).map(DadosListagemConsultaDTO::new);
     }
 
     public Page<DadosListagemConsultaDTO> listarPorData(LocalDate data, Pageable pageable) {

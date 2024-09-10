@@ -38,11 +38,11 @@ public class ConsultaController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemConsultaDTO>> listar(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
-        var consulta = service.listarTodos(paginacao).map(DadosListagemConsultaDTO::new);
-        return ResponseEntity.ok().body(consulta);
-    }
+//    @GetMapping
+//    public ResponseEntity<Page<DadosListagemConsultaDTO>> listar(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+//        var consulta = service.listarTodos(paginacao).map(DadosListagemConsultaDTO::new);
+//        return ResponseEntity.ok().body(consulta);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id) {
@@ -50,7 +50,7 @@ public class ConsultaController {
         return ResponseEntity.ok().body(consulta);
     }
 
-    @GetMapping("/param")
+    @GetMapping()
     public ResponseEntity<Page<DadosListagemConsultaDTO>> listarPorParametros(
             @RequestParam(required = false) String profissionalDeSaudeNome,
             @RequestParam(required = false) String pacienteNome,

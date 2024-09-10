@@ -83,7 +83,7 @@ public class ProfissionalDeSaudeService {
                                                                          String telefone, String registro, Pageable pageable) {
         Specification<ProfissionalDeSaude> spec = ProfissionalDeSaudeSpecification
                 .parametros(nomeCompleto, cpf, dataNascimento, telefone, registro);
-        return repository.findAll(spec, pageable);
+        return repository.findAll(spec, pageable).map(DadosListagemProfissionalDeSaudeDTO::new);
     }
 
 }

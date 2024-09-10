@@ -36,11 +36,11 @@ public class PacienteController {
         return ResponseEntity.created(uri).body(new DadosDetalhamentoPacienteDTO(paciente));
     }
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemPacienteDTO>> listar(@PageableDefault(size = 10, sort = {"nomeCompleto"}) Pageable paginacao) {
-        var paciente = service.listarTodos(paginacao).map(DadosListagemPacienteDTO::new);
-        return ResponseEntity.ok(paciente);
-    }
+//    @GetMapping
+//    public ResponseEntity<Page<DadosListagemPacienteDTO>> listar(@PageableDefault(size = 10, sort = {"nomeCompleto"}) Pageable paginacao) {
+//        var paciente = service.listarTodos(paginacao).map(DadosListagemPacienteDTO::new);
+//        return ResponseEntity.ok(paciente);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarPorId(@PathVariable Long id) {
@@ -58,7 +58,7 @@ public class PacienteController {
         return ResponseEntity.ok(paciente);
     }
 
-    @GetMapping("/param")
+    @GetMapping()
     public ResponseEntity<Page<DadosListagemPacienteDTO>> listarPorParametros (
             @RequestParam(required = false) String nomeCompleto,
             @RequestParam(required = false) String cpf,

@@ -25,7 +25,7 @@ public interface ProfissionalDeSaudeRepository extends JpaRepository<Profissiona
             """)
     Boolean findAtivoById(@NotNull Long id);
 
-    Page<DadosListagemProfissionalDeSaudeDTO> findAll(Specification<ProfissionalDeSaude> spec, Pageable pageable);
+    Page<ProfissionalDeSaude> findAll(Specification<ProfissionalDeSaude> spec, Pageable pageable);
 
     @Query("SELECT p FROM ProfissionalDeSaude p WHERE p.nomeCompleto LIKE %:profissionalDeSaudeNome%")
     Optional<ProfissionalDeSaude> findByName(@Param("profissionalDeSaudeNome") String profissionalDeSaudeNome);
