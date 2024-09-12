@@ -31,9 +31,14 @@ public class PacienteController {
 
     @PostMapping
     public ResponseEntity<?> cadastrar (@RequestBody @Valid DadosCadastroPacienteDTO dados, UriComponentsBuilder builder) {
-        var paciente = service.salvar(dados);
-        var uri = builder.path("/pacientes/{id}").buildAndExpand(paciente.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoPacienteDTO(paciente));
+        try {
+            var paciente = service.salvar(dados);
+            var uri = builder.path("/pacientes/{id}").buildAndExpand(paciente.getId()).toUri();
+            return ResponseEntity.created(uri).body(new DadosDetalhamentoPacienteDTO(paciente));
+        }catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+
     }
 
 //    @GetMapping

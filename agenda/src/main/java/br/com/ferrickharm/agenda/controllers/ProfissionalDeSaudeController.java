@@ -4,6 +4,7 @@ import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosAtualizarProfissi
 import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosCadastroProfissionalDeSaudeDTO;
 import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosDetalhamentoProfissionalDeSaudeDTO;
 import br.com.ferrickharm.agenda.dtos.profissionaldesaude.DadosListagemProfissionalDeSaudeDTO;
+import br.com.ferrickharm.agenda.infra.exceptions.ValidacaoException;
 import br.com.ferrickharm.agenda.services.ProfissionalDeSaudeService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,9 +31,13 @@ public class ProfissionalDeSaudeController {
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody @Valid DadosCadastroProfissionalDeSaudeDTO dados,
                                      UriComponentsBuilder builder) {
-        var profissional = service.salvar(dados);
-        var uri = builder.path("/profissionais-de-saude/{id}").buildAndExpand(profissional.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoProfissionalDeSaudeDTO(profissional));
+        try {
+            var profissional = service.salvar(dados);
+            var uri = builder.path("/profissionais-de-saude/{id}").buildAndExpand(profissional.getId()).toUri();
+            return ResponseEntity.created(uri).body(new DadosDetalhamentoProfissionalDeSaudeDTO(profissional));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 
 //    @GetMapping
