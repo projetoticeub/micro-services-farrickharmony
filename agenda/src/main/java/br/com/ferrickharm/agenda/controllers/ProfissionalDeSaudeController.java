@@ -67,8 +67,7 @@ public class ProfissionalDeSaudeController {
             @RequestParam(required = false) LocalDate dataNascimento,
             @RequestParam(required = false) String telefone,
             @RequestParam(required = false) String registro,
-            @PageableDefault(size = 10, sort = {"nomeCompleto"})
-            Pageable paginacao) {
+            @PageableDefault(size = 20, sort = {"nomeCompleto"}) Pageable paginacao) {
         var profissional = service.listarPorParametros(nomeCompleto, cpf, dataNascimento, telefone, registro, paginacao);
         return ResponseEntity.ok().body(profissional);
     }

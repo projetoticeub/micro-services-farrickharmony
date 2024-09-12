@@ -58,7 +58,7 @@ public class PacienteController {
     }
 
     @GetMapping("/active")
-    public ResponseEntity<Page<DadosListagemPacienteDTO>> listarAtivos(@PageableDefault(size = 10, sort = {"nomeCompleto"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemPacienteDTO>> listarAtivos(@PageableDefault(size = 20, sort = {"nomeCompleto"}) Pageable paginacao) {
         var paciente = service.listarAtivos(paginacao).map(DadosListagemPacienteDTO::new);
         return ResponseEntity.ok(paciente);
     }
@@ -69,7 +69,7 @@ public class PacienteController {
             @RequestParam(required = false) String cpf,
             @RequestParam(required = false) LocalDate dataNascimento,
             @RequestParam(required = false) String telefone,
-            Pageable pageable) {
+            @PageableDefault(size = 20) Pageable pageable) {
         Page<DadosListagemPacienteDTO> pacientes = service.listarPorParametros(nomeCompleto, cpf, dataNascimento, telefone, pageable);
         return ResponseEntity.ok().body(pacientes);
     }

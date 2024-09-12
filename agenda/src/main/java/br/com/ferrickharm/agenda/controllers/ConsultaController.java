@@ -57,7 +57,7 @@ public class ConsultaController {
             @RequestParam(required = false) String profissionalDeSaudeCpf,
             @RequestParam(required = false) String pacienteCpf,
             @RequestParam(required = false) LocalDateTime data,
-            @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+            @PageableDefault(size = 20, sort = {"id"}) Pageable paginacao) {
 
         var consultas = service.listarPorParametros(profissionalDeSaudeNome, pacienteNome,
                 profissionalDeSaudeCpf, pacienteCpf, data, paginacao);
