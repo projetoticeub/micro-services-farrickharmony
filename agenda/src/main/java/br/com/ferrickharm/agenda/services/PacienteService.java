@@ -73,6 +73,9 @@ public class PacienteService {
 
     public Page<DadosListagemPacienteDTO> listarPorParametros(String nomeCompleto, String cpf, LocalDate dataNascimento,
                                                               String telefone, Pageable pageable) {
+        if(nomeCompleto != null && !nomeCompleto.isEmpty()) {
+            nomeCompleto = nomeCompleto.replace("-"," ");
+        }
         Specification<Paciente> spec = PacienteSpecification.parametros(nomeCompleto, cpf, dataNascimento, telefone);
         return repository.findAll(spec, pageable).map(DadosListagemPacienteDTO::new);
     }

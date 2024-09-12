@@ -18,17 +18,18 @@ public class ConsultaSpecification {
             Predicate p = builder.conjunction();
 
             if (profissionalDeSaude != null && profissionalDeSaude.getNomeCompleto() != null) {
-                p = builder.and(p, builder.like(root.get("profissionalDeSaude").get("nomeCompleto"),
-                        "%" + profissionalDeSaude.getNomeCompleto() + "%"));
+                p = builder.and(p, builder.like(
+                        builder.lower(root.get("profissionalDeSaude").get("nomeCompleto")),
+                        "%" + profissionalDeSaude.getNomeCompleto().toLowerCase() + "%"));
             }
-
             if (profissionalDeSaude != null && profissionalDeSaude.getCpf() != null) {
                 p = builder.and(p, builder.equal(root.get("profissionalDeSaude").get("cpf"), profissionalDeSaude.getCpf()));
             }
 
             if (paciente != null && paciente.getNomeCompleto() != null) {
-                p = builder.and(p, builder.like(root.get("paciente").get("nomeCompleto"),
-                        "%" + paciente.getNomeCompleto() + "%"));
+                p = builder.and(p, builder.like(
+                        builder.lower(root.get("paciente").get("nomeCompleto")),
+                        "%" + paciente.getNomeCompleto().toLowerCase() + "%"));
             }
 
             if (paciente != null && paciente.getCpf() != null) {

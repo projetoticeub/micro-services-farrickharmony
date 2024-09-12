@@ -81,6 +81,9 @@ public class ProfissionalDeSaudeService {
 
     public Page<DadosListagemProfissionalDeSaudeDTO> listarPorParametros(String nomeCompleto, String cpf, LocalDate dataNascimento,
                                                                          String telefone, String registro, Pageable pageable) {
+       if(nomeCompleto != null && !nomeCompleto.isEmpty()) {
+            nomeCompleto = nomeCompleto.replace("-"," ");
+       }
         Specification<ProfissionalDeSaude> spec = ProfissionalDeSaudeSpecification
                 .parametros(nomeCompleto, cpf, dataNascimento, telefone, registro);
         return repository.findAll(spec, pageable).map(DadosListagemProfissionalDeSaudeDTO::new);

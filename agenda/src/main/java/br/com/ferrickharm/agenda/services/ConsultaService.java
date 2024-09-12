@@ -99,13 +99,15 @@ public class ConsultaService {
         ProfissionalDeSaude profissionalDeSaude = null;
         Paciente paciente = null;
         if (profissionalDeSaudeNome != null || profissionalDeSaudeCpf != null) {
+            var profissionalNomeReplace = profissionalDeSaudeNome.replace("-"," ");
             profissionalDeSaude = new ProfissionalDeSaude();
-            profissionalDeSaude.setNomeCompleto(profissionalDeSaudeNome);
+            profissionalDeSaude.setNomeCompleto(profissionalNomeReplace);
             profissionalDeSaude.setCpf(profissionalDeSaudeCpf);
         }
         if (pacienteNome != null || pacienteCpf != null) {
+            var pacienteNomeReplace = pacienteNome.replace("-"," ");
             paciente = new Paciente();
-            paciente.setNomeCompleto(pacienteNome);
+            paciente.setNomeCompleto(pacienteNomeReplace);
             paciente.setCpf(pacienteCpf);
         }
         Specification<Consulta> spec = ConsultaSpecification.parametros(profissionalDeSaude, paciente, data);

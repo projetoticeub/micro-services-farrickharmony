@@ -16,24 +16,25 @@ public class ProfissionalDeSaudeSpecification {
         return (Root<ProfissionalDeSaude> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
             Predicate p = builder.conjunction();
 
-            if(nomeCompleto != null) {
-                p = builder.and(p, builder.like(root.get("nomeCompleto"),  "%" + nomeCompleto + "%"));
+            if (nomeCompleto != null) {
+                p = builder.and(p, builder.like(
+                        builder.lower(root.get("nomeCompleto")), "%" + nomeCompleto.toLowerCase() + "%"));
             }
-            if(cpf != null) {
+            if (cpf != null) {
                 p = builder.and(p, builder.equal(root.get("cpf"), cpf));
             }
-            if(dataNascimento != null) {
+            if (dataNascimento != null) {
                 p = builder.and(p, builder.equal(root.get("dataNascimento"), dataNascimento));
             }
-            if(telefone != null) {
+            if (telefone != null) {
                 p = builder.and(p, builder.equal(root.get("telefone"), telefone));
             }
-            if(registro != null) {
+            if (registro != null) {
                 p = builder.and(p, builder.equal(root.get("registro"), registro));
             }
             return p;
         };
-
     }
 
 }
+

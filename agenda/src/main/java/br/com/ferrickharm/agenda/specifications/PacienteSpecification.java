@@ -17,7 +17,8 @@ public class PacienteSpecification {
             Predicate p = builder.conjunction();
 
             if (nomeCompleto != null) {
-                p = builder.and(p, builder.like(root.get("nomeCompleto"), "%" + nomeCompleto + "%"));
+                p = builder.and(p, builder.like(
+                        builder.lower(root.get("nomeCompleto")), "%" + nomeCompleto.toLowerCase() + "%"));
             }
 
             if (cpf != null) {
@@ -36,4 +37,5 @@ public class PacienteSpecification {
         };
     }
 }
+
 
