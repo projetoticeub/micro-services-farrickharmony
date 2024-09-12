@@ -23,16 +23,16 @@ public class ConsultaSpecification {
             }
 
             if (profissionalDeSaude != null && profissionalDeSaude.getCpf() != null) {
-                p = builder.and(p, builder.equal(root.get("profissionalDeSaude").get("cpf"),profissionalDeSaude.getCpf()));
+                p = builder.and(p, builder.equal(root.get("profissionalDeSaude").get("cpf"), profissionalDeSaude.getCpf()));
             }
 
-            if (paciente != null && paciente.getId() != null) {
+            if (paciente != null && paciente.getNomeCompleto() != null) {
                 p = builder.and(p, builder.like(root.get("paciente").get("nomeCompleto"),
                         "%" + paciente.getNomeCompleto() + "%"));
             }
 
             if (paciente != null && paciente.getCpf() != null) {
-                p = builder.and(p, builder.equal(root.get("paciente").get("cpf"),paciente.getCpf()));
+                p = builder.and(p, builder.equal(root.get("paciente").get("cpf"), paciente.getCpf()));
             }
 
             if (data != null) {
