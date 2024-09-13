@@ -7,5 +7,5 @@ CREATE TABLE emails (
     subject VARCHAR(255) NOT NULL,
     text TEXT NOT NULL,
     send_data_email TIMESTAMP NOT NULL,
-    status_email VARCHAR(50) NOT NULL
+    status_email SMALLINT NOT NULL
 );

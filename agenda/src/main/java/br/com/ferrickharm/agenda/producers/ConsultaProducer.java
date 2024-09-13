@@ -31,10 +31,13 @@ public class ConsultaProducer {
         var data = consulta.getData().format(formatter);
 
         email.setText( "Olá, " + consulta.getPaciente().getNomeCompleto()
-                + "! \n\n"
-                +"Sua consulta foi agendada para: " + data
+                + "! \n"
+                + "Sua consulta foi agendada para: " + data
                 + " com o(a) Dr(a) "
-                + consulta.getProfissionalDeSaude().getNomeCompleto());
+                + consulta.getProfissionalDeSaude().getNomeCompleto()
+                + ".\n"
+                + "Endereço da consulta: Clínica FerrickHarmony QS 01, Lotes 01/17 \n"
+                + "Lembre-se de chegar com 15 minutos de antecedência. ");
 
         rabbitTemplate.convertAndSend(routingKey, email);
     }
