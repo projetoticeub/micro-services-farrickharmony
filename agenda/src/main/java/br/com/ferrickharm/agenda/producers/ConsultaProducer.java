@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class ConsultaProducer {
 
@@ -24,9 +26,18 @@ public class ConsultaProducer {
         email.setIdPaciente(consulta.getPaciente().getId());
         email.setEmailTo(consulta.getPaciente().getEmail());
         email.setSubject("Consulta Agendada");
-        email.setText("Sua consulta foi agendada para: " + consulta.getData());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
+        var data = consulta.getData().format(formatter);
+
+        email.setText( "Olá, " + consulta.getPaciente().getNomeCompleto()
+                + "! \n\n"
+                +"Sua consulta foi agendada para: " + data
+                + " com o(a) Dr(a) "
+                + consulta.getProfissionalDeSaude().getNomeCompleto());
 
         rabbitTemplate.convertAndSend(routingKey, email);
     }
 
 }
+
