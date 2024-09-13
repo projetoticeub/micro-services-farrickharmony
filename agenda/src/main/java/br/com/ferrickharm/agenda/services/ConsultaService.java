@@ -93,19 +93,21 @@ public class ConsultaService {
         consultaRepository.deleteById(id);
     }
 
-    public Page<DadosListagemConsultaDTO> listarPorParametros(String profissionalDeSaudeNome , String pacienteNome,
+    public Page<DadosListagemConsultaDTO> listarPorParametros(String profissionalDeSaudeNome, String pacienteNome,
                                                               String profissionalDeSaudeCpf, String pacienteCpf,
                                                               LocalDateTime data, Pageable pageable) {
         ProfissionalDeSaude profissionalDeSaude = null;
         Paciente paciente = null;
+
         if (profissionalDeSaudeNome != null || profissionalDeSaudeCpf != null) {
-            var profissionalNomeReplace = profissionalDeSaudeNome.replace("-"," ");
+            String profissionalNomeReplace = (profissionalDeSaudeNome != null) ? profissionalDeSaudeNome.replace("-", " ") : null;
             profissionalDeSaude = new ProfissionalDeSaude();
             profissionalDeSaude.setNomeCompleto(profissionalNomeReplace);
             profissionalDeSaude.setCpf(profissionalDeSaudeCpf);
         }
+
         if (pacienteNome != null || pacienteCpf != null) {
-            var pacienteNomeReplace = pacienteNome.replace("-"," ");
+            String pacienteNomeReplace = (pacienteNome != null) ? pacienteNome.replace("-", " ") : null;
             paciente = new Paciente();
             paciente.setNomeCompleto(pacienteNomeReplace);
             paciente.setCpf(pacienteCpf);
