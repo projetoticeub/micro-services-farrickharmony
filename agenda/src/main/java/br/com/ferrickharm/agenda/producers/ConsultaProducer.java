@@ -30,13 +30,11 @@ public class ConsultaProducer {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
         var data = consulta.getData().format(formatter);
 
-        email.setText( "Olá, " + consulta.getPaciente().getNomeCompleto()
-                + "! \n"
-                + "Sua consulta foi agendada para: " + data
-                + " com o(a) Dr(a) "
-                + consulta.getProfissionalDeSaude().getNomeCompleto()
-                + ".\n"
-                + "Endereço da consulta: Clínica FerrickHarmony QS 01, Lotes 01/17 \n"
+        email.setText( "Prezado(a) paciente, segue abaixo os dados para seu agendamento: \n"
+                + "Paciente: " + consulta.getPaciente().getNomeCompleto() + "\n"
+                + "Local: Clínica FerrickHarmony QS 01, Lotes 01/17 \n"
+                + "Data: " + data + "\n"
+                + "Profissional: " + consulta.getProfissionalDeSaude().getNomeCompleto() + "\n"
                 + "Lembre-se de chegar com 15 minutos de antecedência. ");
 
         rabbitTemplate.convertAndSend(routingKey, email);
