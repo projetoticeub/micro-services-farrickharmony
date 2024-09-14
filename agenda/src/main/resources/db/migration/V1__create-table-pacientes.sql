@@ -1,7 +1,7 @@
 CREATE TABLE pacientes (
     id SERIAL PRIMARY KEY,
     nome_completo VARCHAR(255) NOT NULL,
-    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
     data_nascimento DATE NOT NULL,
     telefone VARCHAR(15),
     email VARCHAR(255) UNIQUE,
