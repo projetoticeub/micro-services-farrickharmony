@@ -23,7 +23,7 @@
 
 <h2>Fluxo Geral:</h2>
 <ul>
-  <li>Usuários se autenticam na aplicação (registro/login) e recebem um token JWT.</li>
+  <li>Usuários se autenticam na aplicação (auth/login) e recebem um token JWT.</li>
   <li>Com esse token, podem acessar os endpoints protegidos da aplicação.</li>
   <li>Os Pacientes e Profissionais de Saúde são cadastrados e mantidos atualizados no sistema.</li>
   <li>As Consultas são agendadas, e-mails de confirmação são enviados via RabbitMQ, e várias regras de validação garantem a integridade das operações.</li>
