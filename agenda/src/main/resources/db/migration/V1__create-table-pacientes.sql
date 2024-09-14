@@ -4,7 +4,7 @@ CREATE TABLE pacientes (
     cpf VARCHAR(11) UNIQUE NOT NULL,
     data_nascimento DATE NOT NULL,
     telefone VARCHAR(15),
-    email VARCHAR(255) UNIQUE,
+    email VARCHAR(255),
     genero VARCHAR(10),
     cep VARCHAR(8),
     endereco TEXT,
