@@ -312,10 +312,6 @@ CREATE TABLE emails (
     send_data_email TIMESTAMP NOT NULL,
     status_email SMALLINT NOT NULL
 );
-
-ALTER TABLE emails
-  ALTER COLUMN text TYPE oid
-  USING text::oid;
 </pre>
 
 <h4>10. Swagger</h4>
