@@ -24,6 +24,7 @@ public class Email implements Serializable {
     private String emailFrom;
     private String emailTo;
     private String subject;
+    @Column(columnDefinition = "TEXT")
     private String text;
     private LocalDateTime sendDataEmail;
     private StatusEmail statusEmail;
